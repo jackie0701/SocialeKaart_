@@ -92,7 +92,7 @@
 </nav>
 
 
-<main class="py-4">
+<main class="py-4 px-4">
     @yield('content')
     <div class="container-fluid">
         <div class="row justify-content-center">

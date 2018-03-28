@@ -157,7 +157,21 @@ b,
 strong {
   font-weight: bolder;
 }
+.default{
+    background: #22a4f2;
+    font-family: Myriad Pro Regular;
+}
 
+#filter{
+    border: 1px white solid;
+}
+.modal-body{
+    width: 250px;
+}
+checkbox{
+    position: relative;
+    display: block;
+}
 small {
   font-size: 80%;
 }
@@ -248,7 +262,14 @@ caption {
 th {
   text-align: inherit;
 }
-
+.registerForm{
+  display: block;
+  visibility: visible;
+}
+.registerFormIn{
+  display: none;
+  visibility: hidden;
+}
 label {
   display: inline-block;
   margin-bottom: .5rem;
@@ -256,6 +277,10 @@ label {
 
 button {
   border-radius: 0;
+}
+.title {
+  text-align: center;
+  padding: 10px;
 }
 
 button:focus {
@@ -8407,6 +8432,7 @@ button.bg-dark:focus {
 .pr-4,
 .px-4 {
   padding-right: 1.5rem !important;
+
 }
 
 .pb-4,
@@ -8417,6 +8443,7 @@ button.bg-dark:focus {
 .pl-4,
 .px-4 {
   padding-left: 1.5rem !important;
+
 }
 
 .p-5 {

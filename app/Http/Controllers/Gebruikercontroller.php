@@ -2,9 +2,12 @@
 
 namespace SocialeKaart\Http\Controllers;
 
-use SocialeKaart\Gebruiker;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use PhpParser\Node\Expr\Array_;
 use SocialeKaart\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class Gebruikercontroller extends Controller
 {
@@ -20,36 +23,14 @@ class Gebruikercontroller extends Controller
         return view('gebruiker',compact('gebruiker'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(array $gebruiker)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \SocialeKaart\Gebruiker  $gebruiker
-     *  @return \Illuminate\Http\Response
-     */
-    public function show(Gebruiker $gebruiker)
-    {
-        //
+        return User::make($gebruiker, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
     }
 
     /**
@@ -67,22 +48,36 @@ class Gebruikercontroller extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \SocialeKaart\Gebruiker  $gebruiker
+     * @param  \SocialeKaart\User  $gebruiker
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gebruiker $gebruiker)
+    public function update(Request $request, $gebruiker)
     {
+        $gebruiker = User::find($gebruiker);
+        $gebruiker->name = $request->get('name');
+        $gebruiker->email = $request->get('email');
+        $gebruiker->update();
+        if($gebruiker){
+            return redirect('gebruiker')
+                ->with('succes', 'opgeslagen!');
+        }
+        else {
+            return redirect('gebruiker')->with('failed');
+        }
+
+    }/*
+        $gebruiker = User::all();
         request()->validate([
             'name' => 'required',
             'email' => 'required',
         ]);
 
-
         $gebruiker->update($request->all());
+    */
+    public function show(){
 
+        return view('add', compact('gebruiker'));
 
-        return redirect('gebruiker')
-            ->with('success','Gebruiker updated successfully');
     }
 
     /**
@@ -91,8 +86,32 @@ class Gebruikercontroller extends Controller
      * @param  \SocialeKaart\Gebruiker  $gebruiker
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Gebruiker $gebruiker)
+    public function destroy($gebruiker)
     {
+        $user = new User();
+        $gebruiker = $user->find($gebruiker);
         $gebruiker->delete();
+
+        // redirect
+        return redirect('gebruiker');
     }
+    public function create(Request $request)
+    {
+        $gebruiker = new User();
+        $gebruiker->name = $request->name;
+        $gebruiker->email = $request->email;
+        $gebruiker->password = Hash::make($request->email);
+        $gebruiker->save();
+        return view('add');
+    }
+   /* public function create($gebruiker)
+    {
+        $gebruiker = array(
+            ['name' => $gebruiker['name'],
+            'email' => $gebruiker['email'],
+                'password' => Has::make($gebruiker['password']),
+            ]);
+        return var_dump($gebruiker);
+
+    }*/
 }

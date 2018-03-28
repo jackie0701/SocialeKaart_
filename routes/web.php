@@ -17,10 +17,11 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/gebruiker', 'GebruikerController');
-/*/*Route::get('/gebruiker', 'Gebruikercontroller@index');
-Route::patch('/gebruiker', 'Gebruikercontroller@edit');
-Route::post('/gebruiker', 'Gebruikercontroller@update');*/
+Route::get('gebruiker/add', 'Gebruikercontroller@index');
+Route::get('gebruiker/add', 'Gebruikercontroller@create');
+Route::get('gebruiker/add', 'Gebruikercontroller@store');
+Route::get('/add', 'Gebruikercontroller@store');
+Route::get('/add', 'Gebruikercontroller@create');
 Route::delete('/gebruiker/{id}/delete', 'Gebruikercontroller@destroy');
-
 Auth::routes();
 

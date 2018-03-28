@@ -5,19 +5,17 @@
     <meta name="description" content="Sociale Kaart - Home"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Sociale kaart') | Sociale kaart</title>
-
     @section('styles')
         <link rel="stylesheet" type="text/css" href="{{asset("../css/sidebar.css")}}">
         <link rel="stylesheet" type="text/css" href="{{asset("../css/bootstrap.css")}}">
         <link rel="stylesheet" type="text/css" href="{{asset("../css/app.css")}}">
     @show
-
 </head>
-<body>
+<body class="default">
 <div class="container">
     <div class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="navbar-brand">
-            Sociale Kaart
+            Logo
         </div>
             <ul class="navbar-nav mr-auto">
             </ul>
@@ -51,6 +49,7 @@
     </div>
 </div>
 </div>
+<h1 class="title">Sociale Kaart</h1>
 @yield('content')
 
 
