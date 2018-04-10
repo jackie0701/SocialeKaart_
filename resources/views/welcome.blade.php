@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-xs-12 col-sm-4 col-md-4">
         <div class="row" id="filter">
-            <div role="dialog" id="filter-modal">
+            {{--<div role="dialog" id="filter-modal">
                 <div id="filter-dialog">
                     <div id="filter-content">
                         <div class="modal-header">
@@ -43,25 +43,25 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
         </div>
-        <div class="row">
+       {{-- <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-8 results">
                 <div class="row table-header">
                     Resultaten
                 </div>
-                {{--
+                --}}{{--
                 @foreach()
-                --}}
+                --}}{{--
                 <div class="item-row">
                     <div class="col-xs-6">
 
                     </div>
                 </div>
-                {{-- @endforeach
-                  --}}
+                --}}{{-- @endforeach
+                  --}}{{--
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection

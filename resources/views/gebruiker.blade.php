@@ -7,13 +7,20 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
+                        @if (session('status'))
+                            <div class="card-header">
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                            </div>
+                        @endif
                     <table class="table">
                         <thead>
-                        <th scope="col">id:</th>
-                        <th scope="cole">naam:</th>
-                        <th scope="col">email</th>
+                        <th scope="col">ID:</th>
+                        <th scope="cole">Naam:</th>
+                        <th scope="col">Email</th>
                         </thead>
-                        @foreach ($gebruiker as $gebruiker)
+                            @foreach ($gebruikers as $gebruiker)
                             <tbody>
                             <td>{{$gebruiker->id}}</td>
                             <td>{{$gebruiker->name}}</td>
@@ -33,6 +40,7 @@
                             </form>
                             </tbody>
                         @endforeach
+
                     </table>
                     <table class="table">
                         <tbody>
@@ -42,6 +50,9 @@
                         </td>
                         </tbody>
                         </form>
+                        <div class="text-center">
+                            {{ $gebruikers->links() }}
+                        </div>
                     </table>
                 </div>
             </div>

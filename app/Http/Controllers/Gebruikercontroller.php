@@ -2,9 +2,11 @@
 
 namespace SocialeKaart\Http\Controllers;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use PhpParser\Node\Expr\Array_;
+Use DB;
 use SocialeKaart\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,9 +20,9 @@ class Gebruikercontroller extends Controller
      */
     public function index()
     {
-        $gebruiker = User::all();
+        $gebruikers = DB::table('users')->paginate(6);
 
-        return view('gebruiker',compact('gebruiker'));
+        return view('gebruiker',compact('gebruikers', $gebruikers));
     }
 
 
@@ -58,11 +60,10 @@ class Gebruikercontroller extends Controller
         $gebruiker->email = $request->get('email');
         $gebruiker->update();
         if($gebruiker){
-            return redirect('gebruiker')
-                ->with('succes', 'opgeslagen!');
+            return redirect('gebruiker')->with('status', 'Profile edited!');
         }
         else {
-            return redirect('gebruiker')->with('failed');
+            return redirect('gebruiker')->with('status', 'Failed');
         }
 
     }/*
@@ -93,7 +94,15 @@ class Gebruikercontroller extends Controller
         $gebruiker->delete();
 
         // redirect
-        return redirect('gebruiker');
+        return redirect('gebruiker')->with('status', 'Profile deleted!');
+    }
+    protected function validator(array $gebruiker)
+    {
+        return Validator::make($gebruiker, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
     }
     public function create(Request $request)
     {
@@ -102,16 +111,6 @@ class Gebruikercontroller extends Controller
         $gebruiker->email = $request->email;
         $gebruiker->password = Hash::make($request->email);
         $gebruiker->save();
-        return view('add');
+        return redirect('gebruiker')->with('status', 'Profile created!');
     }
-   /* public function create($gebruiker)
-    {
-        $gebruiker = array(
-            ['name' => $gebruiker['name'],
-            'email' => $gebruiker['email'],
-                'password' => Has::make($gebruiker['password']),
-            ]);
-        return var_dump($gebruiker);
-
-    }*/
 }
